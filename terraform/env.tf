@@ -37,14 +37,14 @@ resource "digitalocean_droplet" "martin_vpn" {
 }
 
 # assign the floating IP
-resource "digitalocean_floating_ip_assignment" "open_vpn_assignment" {
-  ip_address = data.terraform_remote_state.network.outputs.openvpn_ip
+resource "digitalocean_floating_ip_assignment" "wireguard_assignment" {
+  ip_address = data.terraform_remote_state.network.outputs.wireguard_ip
   droplet_id = digitalocean_droplet.martin_vpn.id
 }
 
 # create firewall
-resource "digitalocean_firewall" "openvpn_firewall" {
-  name = "openvpn-firewall"
+resource "digitalocean_firewall" "wireguard_firewall" {
+  name = "wireguard-firewall"
 
   droplet_ids = [digitalocean_droplet.martin_vpn.id]
 

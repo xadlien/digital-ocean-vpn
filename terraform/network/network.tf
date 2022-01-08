@@ -20,10 +20,10 @@ provider "digitalocean" {
 }
 
 # create floating ip for the vpn server
-resource "digitalocean_floating_ip" "openvpn_ip" {
+resource "digitalocean_floating_ip" "wireguard_ip" {
   region     = "nyc3"
 }
 
-output "openvpn_ip" {
-  value = digitalocean_floating_ip.openvpn_ip.ip_address
+output "wireguard_ip" {
+  value = digitalocean_floating_ip.wireguard_ip.ip_address
 }

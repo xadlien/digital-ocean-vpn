@@ -47,6 +47,7 @@
     state: started
     name: wg-quick@wg0
     enabled: true
+    no_block: true
   tags:
   - install
 
