@@ -33,7 +33,7 @@ resource "digitalocean_droplet" "martin_vpn" {
     name   = "martin-vpn01"
     region = "nyc3"
     size   = "s-2vcpu-4gb"
-    ssh_keys = [32690924]
+    ssh_keys = [32690924, 32843241]
 }
 
 # assign the floating IP
