@@ -2,12 +2,22 @@
   apt:
     pkg: 
     - wireguard
-    - iptables-persistent
+    # - iptables-persistent
     # - unbound
     # - unbound-host
     # - resolvconf
     state: present
 #    update_cache: true
+  tags:
+  - install
+
+- name: stop wireguard
+  systemd:
+    daemon_reload: true
+    state: stopped
+    name: wg-quick@wg0
+    enabled: true
+  ignore_errors: true
   tags:
   - install
 
@@ -31,69 +41,25 @@
   tags: 
   - install
 
-- name: Make sure a service unit is running
+- name: start wireguard
   systemd:
     daemon_reload: true
-    state: restarted
+    state: started
     name: wg-quick@wg0
     enabled: true
   tags:
   - install
 
-- name: Set iptables rules for VPN/DNS traffic
-  shell: |
-    iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-    iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
-    iptables -A INPUT -p udp -m udp --dport 51820 -m conntrack --ctstate NEW -j ACCEPT
-    iptables -A INPUT -s 10.200.200.0/24 -p tcp -m tcp --dport 53 -m conntrack --ctstate NEW -j ACCEPT
-    iptables -A INPUT -s 10.200.200.0/24 -p udp -m udp --dport 53 -m conntrack --ctstate NEW -j ACCEPT
-    iptables -A FORWARD -i wg0 -o wg0 -m conntrack --ctstate NEW -j ACCEPT
-    iptables -t nat -A POSTROUTING -s 10.200.200.0/24 -o eth0 -j MASQUERADE
-    netfilter-persistent save
-  tags:
-  - install
-
-- name: Make sure netfilter-persistent is enabled
-  systemd:
-    daemon_reload: true
-    state: restarted
-    name: netfilter-persistent
-    enabled: true
-  tags:
-  - install
-
-- name: set ip forwarding
-  shell: echo "net.ipv4.ip_forward=1" > /etc/sysctl.conf
-  tags:
-  - install
-
-# - name: Download DNS Server list
-#   shell: curl -o /var/lib/unbound/root.hints https://www.internic.net/domain/named.cache
-#   tags:
-#   - install
-
-# - name: Set unbound config
-#   copy:
-#     src: unbound.conf
-#     dest: /etc/unbound/unbound.conf
-#   tags:
-#   - install
-
-# - name: set permissions for unbound
-#   shell: chown -R unbound:unbound /var/lib/unbound
-#   tags:
-#   - install
-
-# - name: Make sure unbound is enabled
+# - name: Make sure netfilter-persistent is enabled
 #   systemd:
 #     daemon_reload: true
 #     state: restarted
-#     name: unbound
+#     name: netfilter-persistent
 #     enabled: true
 #   tags:
 #   - install
 
-- name: reboot
-  reboot:
+- name: set ip forwarding
+  shell: echo "net.ipv4.ip_forward=1" > /etc/sysctl.conf && sysctl -p
   tags:
   - install

@@ -55,6 +55,11 @@ resource "digitalocean_firewall" "openvpn_firewall" {
   }
 
   inbound_rule {
+    protocol         = "udp"
+    port_range       = "51820"
+    source_addresses = ["0.0.0.0/0", "::/0"]
+  }
+  inbound_rule {
     protocol         = "tcp"
     port_range       = "51820"
     source_addresses = ["0.0.0.0/0", "::/0"]
