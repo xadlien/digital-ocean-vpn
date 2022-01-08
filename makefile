@@ -9,6 +9,7 @@ build:
 	cd terraform/network && terraform init && terraform apply
 	cd terraform && terraform init && terraform apply
 	bash update-ansiblehosts.sh
+	sleep 10
 	cd ansible && ansible-playbook -i ansible_hosts_automated playbooks/wireguard.yml --ask-vault-password
 destroy:
 	cd terraform && terraform destroy --auto-approve
