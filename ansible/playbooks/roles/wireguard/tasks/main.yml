@@ -1,4 +1,4 @@
-- name: install necessary packages for openvpn
+- name: install necessary packages for wireguard
   apt:
     pkg: 
     - wireguard
@@ -7,7 +7,7 @@
     # - unbound-host
     # - resolvconf
     state: present
-#    update_cache: true
+    update_cache: true
   tags:
   - install
 
@@ -20,11 +20,6 @@
   ignore_errors: true
   tags:
   - install
-
-- name: clear current config
-  file:
-    state: absent
-    path: /etc/wireguard/wg0.conf
 
 - name: template server file
   template:
