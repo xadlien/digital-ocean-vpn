@@ -16,4 +16,5 @@ PreDown = ip6tables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
 # {{ client.name }}
 PublicKey = {{ client.client_public_key }}
 AllowedIPs = {{ client.ip_address }}
+
 {% endfor %}
