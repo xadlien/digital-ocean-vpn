@@ -31,8 +31,9 @@
 - name: template client file
   template:
     src: wg0-client.conf.j2
-    dest: ~/Desktop/wg0-client.conf
+    dest: "~/Desktop/{{ item.config_name }}"
   delegate_to: localhost
+  loop: "{{ clients }}"
   tags: 
   - install
 

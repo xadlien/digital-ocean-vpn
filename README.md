@@ -15,10 +15,10 @@ Two packages are needed to create the necessary encrypted strings:
 # to create the certs and encrypt with ansible-vault
 wg genkey | tee server_private.key | wg pubkey > server_public.key
 wg genkey | tee client_private.key | wg pubkey > client_public.key
-sed 's/\n//g' server_private.key | ansible-vault encrypt-string
-sed 's/\n//g' server_public.key | ansible-vault encrypt-string
-sed 's/\n//g' client_private.key | ansible-vault encrypt-string
-sed 's/\n//g' client_public.key | ansible-vault encrypt-string
+sed 's/\n//g' server_private.key | ansible-vault encrypt_string
+sed 's/\n//g' server_public.key | ansible-vault encrypt_string
+sed 's/\n//g' client_private.key | ansible-vault encrypt_string
+sed 's/\n//g' client_public.key | ansible-vault encrypt_string
 
 # then copy the output to the file in the corresponding variables.
 ```
