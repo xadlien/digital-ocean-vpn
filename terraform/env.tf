@@ -31,8 +31,8 @@ data "terraform_remote_state" "network" {
 resource "digitalocean_droplet" "martin_vpn" {
     image  = "ubuntu-20-04-x64"
     name   = "martin-vpn01"
-    region = "nyc3"
-    size   = "s-2vcpu-4gb"
+    region = "tor1"
+    size   = "s-1vcpu-1gb"
     ssh_keys = [32690924, 32843241]
 }
 

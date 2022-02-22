@@ -21,7 +21,7 @@ provider "digitalocean" {
 
 # create floating ip for the vpn server
 resource "digitalocean_floating_ip" "wireguard_ip" {
-  region     = "nyc3"
+  region     = "tor1"
 }
 
 output "wireguard_ip" {
